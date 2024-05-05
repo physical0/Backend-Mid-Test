@@ -93,7 +93,7 @@ async function createBankAcc(request, response, next) {
       );
     }
 
-    // If email is already be registered
+    // If email is already registered
     const emailIsRegistered = await bankUsersService.emailIsRegistered(email);
     if (emailIsRegistered) {
       throw errorResponder(
@@ -160,7 +160,7 @@ async function createBankAcc(request, response, next) {
       name,
       email,
       birth_date,
-      debit_card_type,
+      debit_card,
       deposit_money,
       password
     );
