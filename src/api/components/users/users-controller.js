@@ -64,6 +64,18 @@ async function getUsers(request, response, next) {
       return response.status(200).json(userssearched);
     }
 
+    // Fitur pagination terpisah
+    if (page_number > 0 && page_size > 0) {
+      let countusers = users.length;
+      const countingUsers = await usersService.Pagination(
+        countusers,
+        page_number,
+        page_size,
+        users
+      );
+      return response.status(200).json(countingUsers);
+    }
+
     return response.status(200).json(users);
   } catch (error) {
     return next(error);
