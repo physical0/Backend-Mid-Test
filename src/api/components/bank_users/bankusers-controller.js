@@ -228,6 +228,8 @@ async function depositMoney(request, response, next) {
     const password_confirm = request.body.password_confirm;
     const deposited_money = request.body.deposited_money;
 
+    const user = await bankUsersService.getBankAcc(country_id);
+
     // Check confirmation password
     if (password !== password_confirm) {
       throw errorResponder(
@@ -251,6 +253,14 @@ async function depositMoney(request, response, next) {
       throw errorResponder(
         errorTypes.WRONG_EMAIL_CONFIRM_TOKEN,
         'Email is not registered'
+      );
+    }
+
+    // If email doesn't match database email
+    if (email !== user.email) {
+      throw errorResponder(
+        errorTypes.WRONG_EMAIL_CONFIRM_TOKEN,
+        'Email confirmation mismatched'
       );
     }
 
@@ -299,6 +309,8 @@ async function retrieveMoney(request, response, next) {
     const password_confirm = request.body.password_confirm;
     const retrieved_money = request.body.retrieved_money;
 
+    const user = await bankUsersService.getBankAcc(country_id);
+
     // Check confirmation password
     if (password !== password_confirm) {
       throw errorResponder(
@@ -322,6 +334,13 @@ async function retrieveMoney(request, response, next) {
       throw errorResponder(
         errorTypes.WRONG_EMAIL_CONFIRM_TOKEN,
         'Email is not registered'
+      );
+    }
+    // If email doesn't match database email
+    if (email !== user.email) {
+      throw errorResponder(
+        errorTypes.WRONG_EMAIL_CONFIRM_TOKEN,
+        'Email confirmation mismatched'
       );
     }
 
